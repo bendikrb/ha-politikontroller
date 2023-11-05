@@ -1,0 +1,82 @@
+[tool.poetry]
+name = "ha-politikontroller"
+version = "0.0.1"
+description = ""
+authors = ["Bendik R. Brenne <bendik@konstant.no>"]
+license = "MIT"
+readme = "README.md"
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Framework :: AsyncIO",
+  "Intended Audience :: Developers",
+  "Natural Language :: English",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3",
+]
+packages = []
+
+[tool.poetry.dependencies]
+python = ">=3.11,<3.12"
+homeassistant = "2023.11"
+politikontroller-py = "^2.1.1"
+
+[tool.poetry.group.dev.dependencies]
+pylint = "3.0.2"
+ruff = "0.1.3"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+ignore = [
+  "ANN101", # Self... explanatory
+  "ANN401", # Opiniated warning on disallowing dynamically typed expressions
+  "D203", # Conflicts with other rules
+  "D213", # Conflicts with other rules
+  "TID252", # Relative imports
+  "RUF012", # Just broken
+  "PLR0913",
+
+  # Formatter conflicts
+  "COM812",
+  "COM819",
+  "D206",
+  "E501",
+  "ISC001",
+  "Q000",
+  "Q001",
+  "Q002",
+  "Q003",
+  "W191",
+]
+select = ["ALL"]
+src = ["custom_components/ha_politikontroller"]
+
+[tool.ruff.flake8-import-conventions.extend-aliases]
+"homeassistant.helpers.area_registry" = "ar"
+"homeassistant.helpers.config_validation" = "cv"
+"homeassistant.helpers.device_registry" = "dr"
+"homeassistant.helpers.entity_registry" = "er"
+"homeassistant.helpers.issue_registry" = "ir"
+voluptuous = "vol"
+
+[tool.ruff.isort]
+force-sort-within-sections = true
+known-first-party = [
+    "homeassistant",
+]
+combine-as-imports = true
+
+[tool.pylint."MESSAGES CONTROL"]
+# Reasons disabled:
+# format - handled by ruff
+# duplicate-code - unavoidable
+# used-before-assignment - false positives with TYPE_CHECKING structures
+disable = [
+  "format",
+  "duplicate-code",
+  "used-before-assignment",
+  "too-many-arguments",
+  "too-many-instance-attributes",
+]

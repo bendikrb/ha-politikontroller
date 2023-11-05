@@ -1,0 +1,44 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "description": "Fill in your Politikontroller.no account details",
+        "data": {
+          "username": "Username (phone number)",
+          "password": "Password",
+          "location": "Location"
+        }
+      }
+    },
+    "abort": {
+      "already_configured": "Service is already configured"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "data": {
+          "type_filter": "Type filter"
+        }
+      }
+    }
+  },
+  "selector": {
+    "type_filter": {
+      "options": {
+        "speed_trap": "Speed control",
+        "behaviour": "Behaviour",
+        "technical": "Technical",
+        "traffic_info": "Traffic information",
+        "traffic_message": "Traffic message",
+        "observation": "Observation",
+        "customs": "Customs/border",
+        "weight": "Weight",
+        "unknown": "Unknown",
+        "civil_police": "Under cover police",
+        "mc_control": "MC",
+        "boat_patrol": "Police boat"
+      }
+    }
+  }
+}

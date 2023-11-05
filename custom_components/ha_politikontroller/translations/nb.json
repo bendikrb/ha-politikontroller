@@ -1,0 +1,44 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "description": "Fyll inn din innloggingsinfo til Politikontroller.no",
+        "data": {
+          "username": "Brukernavn (telefonnummer)",
+          "password": "Passord",
+          "location": "Lokasjon"
+        }
+      }
+    },
+    "abort": {
+      "already_configured": "Tjenesten er allerede konfigurert"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "data": {
+          "type_filter": "Type-filter"
+        }
+      }
+    }
+  },
+  "selector": {
+    "type_filter": {
+      "options": {
+        "speed_trap": "Fartskontroll",
+        "behaviour": "Belte/mobil",
+        "technical": "Teknisk",
+        "traffic_info": "Trafikk info",
+        "traffic_message": "Trafikkmelding",
+        "observation": "Observasjon",
+        "customs": "Toll/grense",
+        "weight": "Vektkontroll",
+        "unknown": "Ukjent",
+        "civil_police": "Sivilpoliti",
+        "mc_control": "Mopedkontroll",
+        "boat_patrol": "Politibåten"
+      }
+    }
+  }
+}
