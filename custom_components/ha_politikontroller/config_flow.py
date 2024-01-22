@@ -38,7 +38,7 @@ DATA_SCHEMA = vol.Schema(
         vol.Required(CONF_USERNAME): cv.string,
         vol.Required(CONF_PASSWORD): cv.string,
         vol.Required(CONF_LOCATION): selector.LocationSelector(
-            selector.LocationSelectorConfig(radius=True, icon="")
+            selector.LocationSelectorConfig(radius=True, icon="mdi:police-badge")
         ),
     }
 )

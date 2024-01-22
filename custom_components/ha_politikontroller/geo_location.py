@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 import logging
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING
 
 from homeassistant.components.geo_location import GeolocationEvent
 from homeassistant.const import UnitOfLength
@@ -13,18 +13,18 @@ import homeassistant.util.dt as dt_util
 from .const import (
     ATTR_DESCRIPTION,
     ATTR_DETAILS,
-    ATTR_EXTERNAL_ID,
     ATTR_TYPE,
     ATTRIBUTION,
     DOMAIN,
     SIGNAL_DELETE_ENTITY,
     SIGNAL_UPDATE_ENTITY,
+    URL_BASE,
 )
 
 if TYPE_CHECKING:
     from collections.abc import Callable
 
-    from politikontroller_py.models import PoliceControl
+    from politikontroller_py.models import PoliceControlResponse
 
     from homeassistant.config_entries import ConfigEntry
     from homeassistant.helpers.entity_platform import AddEntitiesCallback
@@ -66,6 +66,7 @@ class PolitikontrollerEvent(GeolocationEvent):
     _attr_source = DOMAIN
     _attr_unit_of_measurement = UnitOfLength.KILOMETERS
     _attr_attribution = ATTRIBUTION
+    _attr_icon = "mdi:map-marker"
     _attr_type: str | None = None
     _attr_description: str | None = None
     _attr_confirmed: bool = False
@@ -116,30 +117,20 @@ class PolitikontrollerEvent(GeolocationEvent):
         if feed_entry:
             self._update_from_feed(feed_entry)
 
-    def _update_from_feed(self, feed_entry: PoliceControl) -> None:
+    def _update_from_feed(self, feed_entry: PoliceControlResponse) -> None:
         """Update the internal state from the provided feed entry."""
         self._attr_name = feed_entry.title
         self._attr_latitude = feed_entry.lat
         self._attr_longitude = feed_entry.lng
         self._attr_distance = self._feed_manager.get_distance(self._external_id)
-        self._attr_type = feed_entry.type.value
+        self._attr_type = feed_entry.type.name
         last_updated = feed_entry.last_seen or feed_entry.timestamp
         if last_updated:
             self._attr_last_updated_ts = dt_util.as_local(last_updated).isoformat(timespec="seconds")
 
+        self._attr_entity_picture = f"{URL_BASE}/img/{self._attr_type.lower()}.png"
         self._attr_extra_state_attributes = {
             ATTR_TYPE: feed_entry.type.name,
             ATTR_DESCRIPTION: feed_entry.description,
-            ATTR_DETAILS: feed_entry.dict(),
-        }
-
-    @property
-    def extra_state_attributes(self) -> dict[str, Any]:
-        """Return the device state attributes."""
-        if not self._external_id:
-            return {}
-        return {
-            ATTR_EXTERNAL_ID: self._external_id,
-            ATTR_TYPE: self._attr_type,
-            ATTR_DESCRIPTION: self._attr_description,
+            ATTR_DETAILS: feed_entry.model_dump(),
         }

@@ -21,6 +21,7 @@ DEFAULT_RADIUS_IN_KM: Final = 20.0
 DEFAULT_RADIUS_IN_M: Final = 20000.0
 DEFAULT_UPDATE_INTERVAL: Final = timedelta(seconds=300)
 ATTRIBUTION: Final = "politikontroller.no"
+URL_BASE: Final = "/politikontroller"
 
 SIGNAL_DELETE_ENTITY: Final = "ha_politikontroller_delete_{}"
 SIGNAL_UPDATE_ENTITY: Final = "ha_politikontroller_update_{}"

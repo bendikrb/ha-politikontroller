@@ -2,17 +2,21 @@
 from __future__ import annotations
 
 import logging
+from typing import TYPE_CHECKING
 
-from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import Platform
-from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_registry import (
     async_entries_for_config_entry,
     async_get,
 )
 
-from .const import DOMAIN, PLATFORMS
+from .const import DOMAIN, PLATFORMS, URL_BASE
 from .manager import PolitikontrollerFeedEntityManager
+from .static import locate_dir
+
+if TYPE_CHECKING:
+    from homeassistant.config_entries import ConfigEntry
+    from homeassistant.core import HomeAssistant
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -27,6 +31,8 @@ async def async_setup_entry(hass: HomeAssistant, config_entry: ConfigEntry) -> b
     await remove_orphaned_entities(hass, config_entry.entry_id)
     await hass.config_entries.async_forward_entry_setups(config_entry, PLATFORMS)
     await manager.async_init()
+
+    hass.http.register_static_path(f"{URL_BASE}", locate_dir())
     return True
 
 

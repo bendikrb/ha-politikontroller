@@ -5,7 +5,7 @@ import logging
 from typing import TYPE_CHECKING
 
 from politikontroller_py import Client
-from politikontroller_py.models import PoliceControl
+from politikontroller_py.models import PoliceControlsResponse, PoliceControlResponse
 
 from homeassistant.const import (
     CONF_LATITUDE,
@@ -56,7 +56,7 @@ class PolitikontrollerFeedManager:
         filter_radius: float,
     ) -> None:
         """Initialise feed manager."""
-        self.feed_entries: dict[str, PoliceControl] = {}
+        self.feed_entries: dict[str, PoliceControlResponse] = {}
         self._managed_external_ids = set()
         self._last_update = None
         self._last_update_successful = None
@@ -80,7 +80,7 @@ class PolitikontrollerFeedManager:
             )
             _LOGGER.debug("Data retrieved %s", results)
             status = UPDATE_OK if len(results) > 0 else UPDATE_OK_NO_DATA
-            feed_entries = [PoliceControl(**await self._client.get_control(pc["id"])) for pc in results]
+            feed_entries = self._client.get_controls_from_lists(results)
         except Exception as err:  # noqa: BLE001
             status = UPDATE_ERROR
             error = str(err)
@@ -111,7 +111,9 @@ class PolitikontrollerFeedManager:
         await self._status_update(count_created, count_updated, count_removed)
 
     async def _store_feed_entries(
-        self, status: str, feed_entries: list[PoliceControl] | None
+        self,
+        status: str,
+        feed_entries: list[PoliceControlResponse] | None
     ) -> None:
         """Keep a copy of all feed entries for future lookups."""
         if feed_entries or status == UPDATE_OK_NO_DATA:
@@ -226,7 +228,7 @@ class PolitikontrollerFeedEntityManager:
             self._track_time_remove_callback()
         _LOGGER.debug("Feed entity manager stopped")
 
-    def get_entry(self, external_id: str) -> PoliceControl | None:
+    def get_entry(self, external_id: str) -> PoliceControlResponse | None:
         """Get feed entry by external id."""
         return self._feed_manager.feed_entries.get(external_id)
 
