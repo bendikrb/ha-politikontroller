@@ -17,8 +17,8 @@ packages = []
 
 [tool.poetry.dependencies]
 python = ">=3.11,<3.12"
-homeassistant = "2023.11"
-politikontroller-py = "^2.1.1"
+homeassistant = "2024.1.5"
+politikontroller-py = "^3.0.5"
 
 [tool.poetry.group.dev.dependencies]
 pylint = "3.0.2"

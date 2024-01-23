@@ -123,14 +123,14 @@ class PolitikontrollerEvent(GeolocationEvent):
         self._attr_latitude = feed_entry.lat
         self._attr_longitude = feed_entry.lng
         self._attr_distance = self._feed_manager.get_distance(self._external_id)
-        self._attr_type = feed_entry.type.name
+        self._attr_type = feed_entry.type
         last_updated = feed_entry.last_seen or feed_entry.timestamp
         if last_updated:
             self._attr_last_updated_ts = dt_util.as_local(last_updated).isoformat(timespec="seconds")
 
         self._attr_entity_picture = f"{URL_BASE}/img/{self._attr_type.lower()}.png"
         self._attr_extra_state_attributes = {
-            ATTR_TYPE: feed_entry.type.name,
+            ATTR_TYPE: feed_entry.type,
             ATTR_DESCRIPTION: feed_entry.description,
             ATTR_DETAILS: feed_entry.model_dump(),
         }
