@@ -82,7 +82,7 @@ class PolitikontrollerFeedManager:
             )
             _LOGGER.debug("Data retrieved %s", results)
             status = UPDATE_OK if len(results) > 0 else UPDATE_OK_NO_DATA
-            feed_entries = self._client.get_controls_from_lists(results)
+            feed_entries = await self._client.get_controls_from_lists(results)
         except Exception as err:  # noqa: BLE001
             status = UPDATE_ERROR
             error = str(err)
