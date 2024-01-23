@@ -1,7 +1,7 @@
 {
   "domain": "ha_politikontroller",
   "name": "Politikontroller",
-  "version": "0.1.2",
+  "version": "0.1.4",
   "codeowners": [
     "@bendikrb"
   ],
@@ -10,6 +10,6 @@
   "integration_type": "service",
   "iot_class": "cloud_polling",
   "requirements": [
-    "politikontroller-py==3.0.2"
+    "politikontroller-py==3.0.4"
   ]
 }

@@ -5,7 +5,8 @@ import logging
 from typing import TYPE_CHECKING
 
 from politikontroller_py import Client
-from politikontroller_py.models import PoliceControlsResponse, PoliceControlResponse
+from politikontroller_py.models import PoliceControlResponse
+from politikontroller_py.exceptions import AuthenticationError
 
 from homeassistant.const import (
     CONF_LATITUDE,
@@ -17,6 +18,7 @@ from homeassistant.const import (
 )
 from homeassistant.helpers.dispatcher import async_dispatcher_send
 from homeassistant.helpers.event import async_track_time_interval
+from homeassistant.exceptions import ConfigEntryAuthFailed
 from homeassistant.util import (
     dt as dt_util,
     location as loc_util,
@@ -95,7 +97,7 @@ class PolitikontrollerFeedManager:
             # Record current time of update.
             self._last_update_successful = self._last_update
             # For entity management the external ids from the feed are used.
-            feed_external_ids = set([str(entry.id) for entry in feed_entries])  # noqa: C403
+            feed_external_ids = set([str(entry.id) for entry in feed_entries])
             count_removed = await self._update_feed_remove_entries(feed_external_ids)
             count_updated = await self._update_feed_update_entries(feed_external_ids)
             count_created = await self._update_feed_create_entries(feed_external_ids)
@@ -180,18 +182,22 @@ class PolitikontrollerFeedEntityManager:
     ) -> None:
         """Initialize the Politikontroller Feed Manager."""
         self._hass: HomeAssistant = hass
+        self._client = Client()
+        self._config = config_entry.data
         self.entry_id: str = config_entry.entry_id
+
+
         self._feed_manager = PolitikontrollerFeedManager(
             self._hass,
-            Client.initialize(username=config_entry.data[CONF_USERNAME], password=config_entry.data[CONF_PASSWORD]),
+            self._client,
             self._generate_entity,
             self._update_entity,
             self._remove_entity,
             (
-                config_entry.data[CONF_LATITUDE],
-                config_entry.data[CONF_LONGITUDE],
+                self._config[CONF_LATITUDE],
+                self._config[CONF_LONGITUDE],
             ),
-            config_entry.data[CONF_RADIUS],
+            self._config[CONF_RADIUS],
         )
 
         self._track_time_remove_callback: Callable[[], None] | None = None
@@ -211,6 +217,16 @@ class PolitikontrollerFeedEntityManager:
         self._track_time_remove_callback = async_track_time_interval(
             self._hass, update, DEFAULT_UPDATE_INTERVAL
         )
+
+        # Authenticate
+        try:
+            await self._client.authenticate_user(
+                username=self._config[CONF_USERNAME],
+                password=self._config[CONF_PASSWORD],
+            )
+        except AuthenticationError as err:
+            _LOGGER.exception("Error authenticating politikontroller account: %s", err)
+            raise ConfigEntryAuthFailed from err
 
         _LOGGER.debug("Feed entity manager initialized")
 
