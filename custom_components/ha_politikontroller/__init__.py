@@ -32,7 +32,11 @@ async def async_setup_entry(hass: HomeAssistant, config_entry: ConfigEntry) -> b
     await hass.config_entries.async_forward_entry_setups(config_entry, PLATFORMS)
     await manager.async_init()
 
-    hass.http.register_static_path(f"{URL_BASE}", locate_dir())
+    static_path = locate_dir()
+    hass.http.register_static_path(
+        f"{URL_BASE}/img",
+        f"{static_path}/img",
+    )
     return True
 
 

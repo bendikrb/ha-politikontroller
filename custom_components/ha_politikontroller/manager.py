@@ -4,10 +4,6 @@ from __future__ import annotations
 import logging
 from typing import TYPE_CHECKING
 
-from politikontroller_py import Client
-from politikontroller_py.models import PoliceControlResponse
-from politikontroller_py.exceptions import AuthenticationError
-
 from homeassistant.const import (
     CONF_LATITUDE,
     CONF_LONGITUDE,
@@ -16,13 +12,16 @@ from homeassistant.const import (
     CONF_USERNAME,
     UnitOfLength,
 )
+from homeassistant.exceptions import ConfigEntryAuthFailed
 from homeassistant.helpers.dispatcher import async_dispatcher_send
 from homeassistant.helpers.event import async_track_time_interval
-from homeassistant.exceptions import ConfigEntryAuthFailed
 from homeassistant.util import (
     dt as dt_util,
     location as loc_util,
 )
+from politikontroller_py import Client
+from politikontroller_py.exceptions import AuthenticationError
+from politikontroller_py.models import PoliceControlResponse
 
 from .const import (
     DEFAULT_UPDATE_INTERVAL,
@@ -185,7 +184,6 @@ class PolitikontrollerFeedEntityManager:
         self._client = Client()
         self._config = config_entry.data
         self.entry_id: str = config_entry.entry_id
-
 
         self._feed_manager = PolitikontrollerFeedManager(
             self._hass,

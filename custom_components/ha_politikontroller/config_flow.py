@@ -4,9 +4,7 @@ from __future__ import annotations
 import logging
 from typing import TYPE_CHECKING, Any
 
-from politikontroller_py.models import PoliceControlTypeEnum
 import voluptuous as vol
-
 from homeassistant import config_entries
 from homeassistant.const import (
     CONF_LATITUDE,
@@ -23,6 +21,7 @@ from homeassistant.helpers.selector import (
     SelectSelectorConfig,
 )
 from homeassistant.util.unit_conversion import DistanceConverter
+from politikontroller_py.models import PoliceControlTypeEnum
 
 from .const import CONF_TYPE_FILTER, DEFAULT_RADIUS_IN_M, DOMAIN
 

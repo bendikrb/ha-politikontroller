@@ -4,11 +4,12 @@ from __future__ import annotations
 import logging
 from typing import TYPE_CHECKING
 
+import homeassistant.util.dt as dt_util
 from homeassistant.components.geo_location import GeolocationEvent
 from homeassistant.const import UnitOfLength
 from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers.dispatcher import async_dispatcher_connect
-import homeassistant.util.dt as dt_util
+from politikontroller_py.models import PoliceControlTypeEnum
 
 from .const import (
     ATTR_DESCRIPTION,
@@ -124,13 +125,18 @@ class PolitikontrollerEvent(GeolocationEvent):
         self._attr_longitude = feed_entry.lng
         self._attr_distance = self._feed_manager.get_distance(self._external_id)
         self._attr_type = feed_entry.type
+        try:
+            pc_type = PoliceControlTypeEnum(feed_entry.type)
+        except ValueError:
+            pc_type = PoliceControlTypeEnum.UNKNOWN
+
         last_updated = feed_entry.last_seen or feed_entry.timestamp
         if last_updated:
             self._attr_last_updated_ts = dt_util.as_local(last_updated).isoformat(timespec="seconds")
 
-        self._attr_entity_picture = f"{URL_BASE}/img/{self._attr_type.lower()}.png"
+        self._attr_entity_picture = f"{URL_BASE}/img/{pc_type.name.lower()}.png"
         self._attr_extra_state_attributes = {
-            ATTR_TYPE: feed_entry.type,
+            ATTR_TYPE: pc_type.name,
             ATTR_DESCRIPTION: feed_entry.description,
             ATTR_DETAILS: feed_entry.model_dump(),
         }
