@@ -25,12 +25,12 @@ async def async_setup_entry(hass: HomeAssistant, config_entry: ConfigEntry) -> b
     """Set up the Politikontroller events component as config entry."""
     feeds = hass.data.setdefault(DOMAIN, {})
     # Create feed entity manager for all platforms.
-    manager = PolitikontrollerFeedEntityManager(hass, config_entry)
-    feeds[config_entry.entry_id] = manager
+    entity_manager = PolitikontrollerFeedEntityManager(hass, config_entry)
+    feeds[config_entry.entry_id] = entity_manager
     _LOGGER.debug("Feed entity manager added for %s", config_entry.entry_id)
     await remove_orphaned_entities(hass, config_entry.entry_id)
     await hass.config_entries.async_forward_entry_setups(config_entry, PLATFORMS)
-    await manager.async_init()
+    await entity_manager.async_init()
 
     static_path = locate_dir()
     hass.http.register_static_path(
@@ -62,6 +62,6 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Unload the Politikontroller events config entry."""
     unload_ok = await hass.config_entries.async_unload_platforms(entry, PLATFORMS)
     if unload_ok:
-        manager: PolitikontrollerFeedEntityManager = hass.data[DOMAIN].pop(entry.entry_id)
-        await manager.async_stop()
+        entity_manager: PolitikontrollerFeedEntityManager = hass.data[DOMAIN].pop(entry.entry_id)
+        await entity_manager.async_stop()
     return unload_ok

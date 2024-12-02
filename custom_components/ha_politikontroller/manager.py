@@ -4,6 +4,9 @@ from __future__ import annotations
 import logging
 from typing import TYPE_CHECKING
 
+from politikontroller_py import Client
+from politikontroller_py.exceptions import AuthenticationError
+
 from homeassistant.const import (
     CONF_LATITUDE,
     CONF_LONGITUDE,
@@ -19,9 +22,6 @@ from homeassistant.util import (
     dt as dt_util,
     location as loc_util,
 )
-from politikontroller_py import Client
-from politikontroller_py.exceptions import AuthenticationError
-from politikontroller_py.models import PoliceControlResponse
 
 from .const import (
     DEFAULT_UPDATE_INTERVAL,
@@ -36,6 +36,8 @@ from .const import (
 if TYPE_CHECKING:
     from collections.abc import Awaitable, Callable
     from datetime import datetime
+
+    from politikontroller_py.models import PoliceControlResponse
 
     from homeassistant.config_entries import ConfigEntry
     from homeassistant.core import HomeAssistant
@@ -96,7 +98,7 @@ class PolitikontrollerFeedManager:
             # Record current time of update.
             self._last_update_successful = self._last_update
             # For entity management the external ids from the feed are used.
-            feed_external_ids = set([str(entry.id) for entry in feed_entries])
+            feed_external_ids = set([str(entry.id) for entry in feed_entries])  # noqa: C403
             count_removed = await self._update_feed_remove_entries(feed_external_ids)
             count_updated = await self._update_feed_update_entries(feed_external_ids)
             count_created = await self._update_feed_create_entries(feed_external_ids)
@@ -207,7 +209,7 @@ class PolitikontrollerFeedEntityManager:
     async def async_init(self) -> None:
         """Schedule initial and regular updates based on configured time interval."""
 
-        async def update(event_time: datetime) -> None:
+        async def update(event_time: datetime) -> None:  # noqa: ARG001
             """Update."""
             await self.async_update()
 
@@ -223,7 +225,7 @@ class PolitikontrollerFeedEntityManager:
                 password=self._config[CONF_PASSWORD],
             )
         except AuthenticationError as err:
-            _LOGGER.exception("Error authenticating politikontroller account: %s", err)
+            _LOGGER.exception("Error authenticating politikontroller account.")
             raise ConfigEntryAuthFailed from err
 
         _LOGGER.debug("Feed entity manager initialized")

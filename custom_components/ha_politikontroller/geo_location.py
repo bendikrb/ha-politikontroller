@@ -4,12 +4,13 @@ from __future__ import annotations
 import logging
 from typing import TYPE_CHECKING
 
-import homeassistant.util.dt as dt_util
+from politikontroller_py.models.api import PoliceControlTypeEnum
+
 from homeassistant.components.geo_location import GeolocationEvent
 from homeassistant.const import UnitOfLength
 from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers.dispatcher import async_dispatcher_connect
-from politikontroller_py.models import PoliceControlTypeEnum
+import homeassistant.util.dt as dt_util
 
 from .const import (
     ATTR_DESCRIPTION,
@@ -138,5 +139,5 @@ class PolitikontrollerEvent(GeolocationEvent):
         self._attr_extra_state_attributes = {
             ATTR_TYPE: pc_type.name,
             ATTR_DESCRIPTION: feed_entry.description,
-            ATTR_DETAILS: feed_entry.model_dump(),
+            ATTR_DETAILS: feed_entry.to_dict(),
         }

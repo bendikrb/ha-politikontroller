@@ -4,7 +4,9 @@ from __future__ import annotations
 import logging
 from typing import TYPE_CHECKING, Any
 
+from politikontroller_py.models.api import PoliceControlTypeEnum
 import voluptuous as vol
+
 from homeassistant import config_entries
 from homeassistant.const import (
     CONF_LATITUDE,
@@ -21,7 +23,6 @@ from homeassistant.helpers.selector import (
     SelectSelectorConfig,
 )
 from homeassistant.util.unit_conversion import DistanceConverter
-from politikontroller_py.models import PoliceControlTypeEnum
 
 from .const import CONF_TYPE_FILTER, DEFAULT_RADIUS_IN_M, DOMAIN
 
@@ -30,6 +31,7 @@ if TYPE_CHECKING:
 
     from homeassistant.data_entry_flow import FlowResult
 
+# noinspection PyUnresolvedReferences
 ENTRY_TYPES = [t.name.lower() for t in PoliceControlTypeEnum]
 
 DATA_SCHEMA = vol.Schema(
@@ -45,6 +47,7 @@ DATA_SCHEMA = vol.Schema(
 _LOGGER = logging.getLogger(__name__)
 
 
+# noinspection PyTypeChecker
 class PolitikontrollerFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
     """Handle a Politikontroller events config flow."""
 
@@ -103,6 +106,7 @@ class PolitikontrollerFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
         return OptionsFlow(config_entry)
 
 
+# noinspection PyTypeChecker
 class OptionsFlow(config_entries.OptionsFlow):
     """Politikontroller config flow options handler."""
 
