@@ -1999,13 +1999,13 @@ type = ["mypy (>=1.11.2)"]
 
 [[package]]
 name = "politikontroller-py"
-version = "3.3.1"
+version = "3.3.2"
 description = "Unofficial client for politikontroller.no"
 optional = false
 python-versions = "<3.13,>=3.10"
 files = [
-    {file = "politikontroller_py-3.3.1-py3-none-any.whl", hash = "sha256:f4416d6484c8546017a48f47d833fc90929b48e066ef040ac80185abf4c93194"},
-    {file = "politikontroller_py-3.3.1.tar.gz", hash = "sha256:972ef8e73a398ead461a089465a0a34cb0abdf98124d80934e962c08e3b13e2b"},
+    {file = "politikontroller_py-3.3.2-py3-none-any.whl", hash = "sha256:b7854bf8af1fc017ae7afbd42717d7b1d1eda3edae72e72c88ef8e6d59e987aa"},
+    {file = "politikontroller_py-3.3.2.tar.gz", hash = "sha256:16772bb589519d8d2471b6354eae7ec868e2f53cb4e7cae6b5f763dfb2205206"},
 ]
 
 [package.dependencies]
@@ -3361,4 +3361,4 @@ propcache = ">=0.2.0"
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.12,<3.13"
-content-hash = "9b833d845541e44ebac304bc035d01189c393e2806e7aba499438bad794d4a83"
+content-hash = "267dad5ca5dcd6b37bd160078048dc865d1b458a7638c1869701d665a98be5de"

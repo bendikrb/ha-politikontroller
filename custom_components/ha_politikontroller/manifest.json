@@ -11,6 +11,6 @@
   "integration_type": "service",
   "iot_class": "cloud_polling",
   "requirements": [
-    "politikontroller-py==3.3.1"
+    "politikontroller-py==3.3.2"
   ]
 }
