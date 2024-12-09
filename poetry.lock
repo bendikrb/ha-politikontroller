@@ -296,13 +296,13 @@ files = [
 
 [[package]]
 name = "async-timeout"
-version = "5.0.1"
+version = "4.0.3"
 description = "Timeout context manager for asyncio programs"
 optional = false
-python-versions = ">=3.8"
+python-versions = ">=3.7"
 files = [
-    {file = "async_timeout-5.0.1-py3-none-any.whl", hash = "sha256:39e3809566ff85354557ec2398b55e096c8364bacac9405a7a1fa429e77fe76c"},
-    {file = "async_timeout-5.0.1.tar.gz", hash = "sha256:d9321a7a3d5a6a5e187e824d2fa0793ce379a202935782d555d6e9d2735677d3"},
+    {file = "async-timeout-4.0.3.tar.gz", hash = "sha256:4640d96be84d82d02ed59ea2b7105a0f7b33abe8703703cd0ab0bf87c427522f"},
+    {file = "async_timeout-4.0.3-py3-none-any.whl", hash = "sha256:7405140ff1230c310e51dc27b3145b9092d659ce68ff733fb0cefe3ee42be028"},
 ]
 
 [[package]]
@@ -1128,6 +1128,17 @@ files = [
     {file = "frozenlist-1.5.0-cp39-cp39-win_amd64.whl", hash = "sha256:5c28f4b5dbef8a0d8aad0d4de24d1e9e981728628afaf4ea0792f5d0939372f0"},
     {file = "frozenlist-1.5.0-py3-none-any.whl", hash = "sha256:d994863bba198a4a518b467bb971c56e1db3f180a25c6cf7bb1949c267f748c3"},
     {file = "frozenlist-1.5.0.tar.gz", hash = "sha256:81d5af29e61b9c8348e876d442253723928dce6433e0e76cd925cd83f1b4b817"},
+]
+
+[[package]]
+name = "geojson"
+version = "3.1.0"
+description = "Python bindings and utilities for GeoJSON"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "geojson-3.1.0-py3-none-any.whl", hash = "sha256:68a9771827237adb8c0c71f8527509c8f5bef61733aa434cefc9c9d4f0ebe8f3"},
+    {file = "geojson-3.1.0.tar.gz", hash = "sha256:58a7fa40727ea058efc28b0e9ff0099eadf6d0965e04690830208d3ef571adac"},
 ]
 
 [[package]]
@@ -1988,20 +1999,21 @@ type = ["mypy (>=1.11.2)"]
 
 [[package]]
 name = "politikontroller-py"
-version = "3.1.0"
+version = "3.3.1"
 description = "Unofficial client for politikontroller.no"
 optional = false
 python-versions = "<3.13,>=3.10"
 files = [
-    {file = "politikontroller_py-3.1.0-py3-none-any.whl", hash = "sha256:12e25c6c04e6a252a4ded3917f73611777f647e8a1a86fc94fa59145ec3215ab"},
-    {file = "politikontroller_py-3.1.0.tar.gz", hash = "sha256:8980697e5d629df6615d714d7f14832faa77411eaa143d492740f90fb662fb92"},
+    {file = "politikontroller_py-3.3.1-py3-none-any.whl", hash = "sha256:f4416d6484c8546017a48f47d833fc90929b48e066ef040ac80185abf4c93194"},
+    {file = "politikontroller_py-3.3.1.tar.gz", hash = "sha256:972ef8e73a398ead461a089465a0a34cb0abdf98124d80934e962c08e3b13e2b"},
 ]
 
 [package.dependencies]
 aiohttp = ">=3.11,<4.0"
 anyio = "==4.*"
-async-timeout = ">=5.0.1,<6.0.0"
+async-timeout = ">=4.0.3,<5.0.0"
 asyncclick = "==8.*"
+geojson = ">=3.1.0,<4.0.0"
 mashumaro = {version = ">=3.13.1,<4.0.0", extras = ["orjson"]}
 pycryptodome = ">=3.21.0,<4.0.0"
 tabulate = "==0.9.*"
@@ -3349,4 +3361,4 @@ propcache = ">=0.2.0"
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.12,<3.13"
-content-hash = "825b119b952cf327e22ae05ac3166300a82acabb7f0693eaa6a471eb709f2173"
+content-hash = "9b833d845541e44ebac304bc035d01189c393e2806e7aba499438bad794d4a83"
