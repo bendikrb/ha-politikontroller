@@ -57,5 +57,5 @@ The configuration UI will guide you through adding the integration to Home Assis
 [maintenance-shield]: https://img.shields.io/badge/maintainer-%40bendikrb-blue.svg?style=flat
 [releases-shield]: https://img.shields.io/github/release/bendikrb/ha-politikontroller.svg?style=flat
 [releases]: https://github.com/bendikrb/ha-politikontroller/releases
-[download-latest-shield]: https://img.shields.io/github/downloads/bendikrb/ha-politikontroller/latest/total?style=flat
+[download-latest-shield]: https://img.shields.io/github/downloads/bendikrb/ha-politikontroller/total?style=flat
 [madewithlove-shield]: https://madewithlove.now.sh/no?heart=true&colorB=%233584e4
