@@ -14,6 +14,16 @@
 
 _Integration to bring entries from [politikontroller.no][politikontroller] to your Home Assistant instance._
 
+
+---
+
+# ⚠️ CURRENTLY BROKEN ⚠️
+
+Due to an issue with the Politikontroller API, which was changed some time in early may, this integration is currently broken.
+
+
+---
+
 **This integration will set up the following platforms.**
 
 | Platform       | Description                                                                                |
